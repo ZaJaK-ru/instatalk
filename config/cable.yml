@@ -9,3 +9,4 @@ production:
   adapter: redis
   url: <%= ENV.fetch("REDISTOGO_URL") %>
   channel_prefix: instatalk_production
+  
