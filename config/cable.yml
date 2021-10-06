@@ -1,12 +1,11 @@
 development:
-  adapter: redis
-  url: redis://localhost:6379/1
+  adapter: async
 
 test:
-  adapter: test
+  adapter: async
 
 production:
   adapter: redis
-  url: <%= ENV.fetch("REDISTOGO_URL") %>
+  url: redis://redistogo:49ee12bfbab3f90d7cc6cde7b1c04664@dory.redistogo.com:9827/
   channel_prefix: instatalk_production
   
