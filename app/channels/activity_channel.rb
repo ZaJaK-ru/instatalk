@@ -1,22 +1,21 @@
 class ActivityChannel < ApplicationCable::Channel
   def subscribed
-    redis.set("user_#{current_user.id}_online", "1")
-    stream_from("activity_channel")
-    ActionCable.server.broadcast "activity_channel",
-                                 user_id: current_user.id,
-                                 online: true
+    stream_from "activity_channel"
+
+    if current_user
+      ActionCable.server.broadcast("activity_channel",
+        { user: current_user.id, online: true })
+      current_user.online = true
+      current_user.save!
+    end
   end
 
   def unsubscribed
-    redis.del("user_#{current_user.id}_online")
-    ActionCable.server.broadcast "activity_channel",
-                                 user_id: current_user.id,
-                                 online: false
-  end
-
-  private
-
-  def redis
-    Redis.new
+    if current_user
+      ActionCable.server.broadcast("activity_channel",
+        { user: current_user.id, online: false })
+      current_user.online = false
+      current_user.save!
+    end
   end
 end

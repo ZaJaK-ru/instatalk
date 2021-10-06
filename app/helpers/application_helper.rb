@@ -1,5 +1,5 @@
 module ApplicationHelper
   def users_online
-    User.all.map{ |u| u.nickname if u.online? }.join(' ')
+    User.online.map(&:nickname).join(' ')
   end
 end
