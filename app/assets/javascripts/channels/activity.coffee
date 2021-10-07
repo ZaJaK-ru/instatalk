@@ -1,10 +1,10 @@
 jQuery(document).on 'turbolinks:load', ->
-  App.activity = App.cable.subscriptions.create {
-    channel: "ActivityChannel"
-  },
+  App.activity = App.cable.subscriptions.create "ActivityChannel",
+
   connected: ->
 
   disconnected: ->
 
   received: (data) ->
-    console.log('Recieved data: ' + data)
+    users = (data['users'].map (user) -> user['nickname'])
+    $('#users_online').text(users.join(' '))

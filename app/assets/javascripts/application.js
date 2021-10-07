@@ -22,3 +22,8 @@ $(function() {
 $(document).on("turbolinks:load", function() {
   console.log('Document is loaded (turbolinks:load)');
 })
+
+function scrollBottom(messages){
+  console.log('messages: ' + messages)
+  messages.scrollTop = messages.scrollHeight
+}
