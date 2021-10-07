@@ -7,3 +7,4 @@ jQuery(document).on 'turbolinks:load', ->
   disconnected: ->
 
   received: (data) ->
+    console.log('Recieved data: ' + data)
