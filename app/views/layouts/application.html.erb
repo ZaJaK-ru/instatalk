@@ -14,7 +14,12 @@
     <div class="col-md-8">
       <div class="card text-center mt-4 mb-4">
         <div class="card-body">
-          Welcome to Instatalk21, <b><%= current_user.nickname %></b>!
+           <% if current_user %>
+               <h4>Welcome to Instatalk21, <b><%= current_user.nickname %></b>!
+               <%= link_to "Delete user", user_path(current_user.id), method: :delete, data: { confirm: "Are you sure you want to delete the user?" }, class: "badge badge-danger" %></h4>
+           <% else %>
+               <%= link_to "Сreate user and enter the chat", new_user_path, class: "btn btn-primary btn-lg" %>
+           <% end %>
         </div>
       </div>
 
@@ -23,11 +28,14 @@
           Online:
         </div>
         <div class="card-body text-success bg-light" id="users_online">
-          <%= users_online %> 
+          <% @online_users&.each do |user| %>
+            <span id="user_<%= user.id %>"><%= user.nickname %></span>
+          <% end %>
         </div>
       </div>
 
-      <%= yield %>
+      <%= yield if current_user %>
+
     </div>
   </div>
 </div>

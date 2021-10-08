@@ -6,5 +6,9 @@ jQuery(document).on 'turbolinks:load', ->
   disconnected: ->
 
   received: (data) ->
-    users = (data['users'].map (user) -> user['nickname'])
-    $('#users_online').text(users.join(' '))
+    current_user = data.user
+
+    if current_user.online && $("span[id='user_#{current_user.id}'").length == 0
+      $('#users_online').append("<span id='user_#{current_user.id}' > #{current_user.nickname} </span>")
+    else if !current_user.online
+      $("span[id='user_#{current_user.id}'").remove()
